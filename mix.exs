@@ -20,7 +20,8 @@ defmodule BuffEx.MixProject do
         dialyzer: :test,
         "coveralls.lcov": :test,
         "coveralls.json": :test,
-        "coveralls.html": :test
+        "coveralls.html": :test,
+        check: :test
       ],
       dialyzer: [
         plt_add_apps: [:ex_unit, :mix],
