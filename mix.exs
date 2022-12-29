@@ -10,7 +10,24 @@ defmodule BuffEx.MixProject do
       compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        credo: :test,
+        coveralls: :test,
+        doctor: :test,
+        coverage: :test,
+        dialyzer: :test,
+        "coveralls.lcov": :test,
+        "coveralls.json": :test,
+        "coveralls.html": :test
+      ],
+      dialyzer: [
+        plt_add_apps: [:ex_unit, :mix],
+        list_unused_filters: true,
+        plt_local_path: "../../.check/local_plt",
+        plt_core_path: "../../.check/core_plt"
+      ]
     ]
   end
 
@@ -48,7 +65,15 @@ defmodule BuffEx.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+
+      # tooling
+      {:dialyxir, "~> 1.1", only: :test, runtime: false},
+      {:ex_check, "~> 0.15.0", only: :test, runtime: false},
+      {:credo, "~> 1.6", only: :test, runtime: false},
+      {:blitz_credo_checks, "~> 0.1.5", only: :test, runtime: false},
+      {:doctor, "~> 0.21.0", only: :test},
+      {:excoveralls, "~> 0.13", only: :test}
     ]
   end
 

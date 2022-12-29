@@ -1,0 +1,26 @@
+{
+    "skip_files": [
+      "lib/buff_ex/config.ex",
+      "lib/buff_ex/application.ex",
+      "test/support/*",
+      "lib/buff_ex_web.ex",
+      "lib/buff_ex_web/router.ex",
+      "ib/buff_ex_web/views/error_helpers.ex", 
+      "lib/buff_ex_web/telemetry.ex"
+
+    ],
+  
+    "terminal_options": {
+      "file_column_width": 75
+    },
+  
+    "coverage_options": {
+      "html_filter_full_covered": true,
+      "treat_no_relevant_lines_as_covered": true,
+      "minimum_coverage": 70
+    },
+  
+    "custom_stop_words": [
+      "defdelegate"
+    ]
+  }
