@@ -8,6 +8,7 @@ defmodule BuffEx.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      {Finch, name: BuffEx.Finch},
       # Start the Ecto repository
       BuffEx.Repo,
       # Start the Telemetry supervisor
@@ -16,6 +17,7 @@ defmodule BuffEx.Application do
       {Phoenix.PubSub, name: BuffEx.PubSub},
       # Start the Endpoint (http/https)
       BuffExWeb.Endpoint
+
       # Start a worker by calling: BuffEx.Worker.start_link(arg)
       # {BuffEx.Worker, arg}
     ]
