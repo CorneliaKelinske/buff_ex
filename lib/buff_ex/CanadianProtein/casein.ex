@@ -36,7 +36,7 @@ defmodule BuffEx.CanadianProtein.Casein do
     struct!(__MODULE__, casein)
   end
 
-  @spec find :: String.t() | {:error, String.t()}
+  @spec find(String.t()) :: String.t() | {:error, String.t()}
   def find(url \\ @url) do
     with {:ok, document} <- HTTP.send_request_and_prep_response(url) do
       casein = %{
@@ -48,11 +48,12 @@ defmodule BuffEx.CanadianProtein.Casein do
         url: @url
       }
 
-      casein = new(
-        Map.merge(casein, %{
-          price_per_hundred_gram: price_per_hundred_gram(casein.price, casein.gram_quantity)
-        })
-      )
+      casein =
+        new(
+          Map.merge(casein, %{
+            price_per_hundred_gram: price_per_hundred_gram(casein.price, casein.gram_quantity)
+          })
+        )
 
       {:ok, casein}
     end
