@@ -1,0 +1,45 @@
+name: Credo
+
+on: [push]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Credo
+
+    runs-on: ubuntu-latest
+
+    env:
+      MIX_ENV: test
+      CI: true
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: '1.14.1' # Define the elixir version [required]
+          otp-version: '25.1.2' # Define the OTP version [required]
+
+      - name: Restore dependencies cache
+        uses: actions/cache@v3
+        with:
+          path: |
+                _build
+                deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('./.tool-versions') }}
+          restore-keys: ${{ runner.os }}-mix-
+
+      - name: Install dependencies & compile
+        run: mix do deps.get, compile --warnings-as-errors
+
+      - name: Run Credo
+        run: mix credo
+

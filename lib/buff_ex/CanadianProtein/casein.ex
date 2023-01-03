@@ -78,6 +78,7 @@ defmodule BuffEx.CanadianProtein.Casein do
     |> Floki.text()
     |> String.split("$")
     |> List.last()
+    |> String.trim()
     |> String.to_float()
     |> to_cents()
     |> maybe_apply_discount(document)
