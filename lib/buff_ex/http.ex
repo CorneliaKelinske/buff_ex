@@ -4,10 +4,11 @@ defmodule BuffEx.HTTP do
   processing
   """
 
+  @spec send_request_and_prep_response(String.t()) ::
+          {:ok, Floki.html_tree()} | {:error, String.t()}
   def send_request_and_prep_response(url) do
-    with {:ok, body} <- request(url),
-         {:ok, document} <- Floki.parse_document(body) do
-      {:ok, document}
+    with {:ok, body} <- request(url) do
+      Floki.parse_document(body)
     end
   end
 
