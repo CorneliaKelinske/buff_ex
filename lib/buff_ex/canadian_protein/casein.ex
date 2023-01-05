@@ -106,7 +106,7 @@ defmodule BuffEx.CanadianProtein.Casein do
       |> List.first()
       |> String.to_integer()
 
-    round(price * discount / 100)
+    price - round(price * discount / 100)
   end
 
   defp price_per_hundred_gram(price, @gram_quantity) do
