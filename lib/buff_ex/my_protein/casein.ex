@@ -4,7 +4,7 @@ defmodule BuffEx.MyProtein.Casein do
   queries the page and converts successful results into structs
   """
 
-  alias BuffEx.HTTP
+  alias BuffEx.MyProtein.Scraper
 
   @enforce_keys [
     :name,
@@ -12,7 +12,7 @@ defmodule BuffEx.MyProtein.Casein do
     :gram_quantity,
     :price,
     :price_per_hundred_gram,
-    :sold_out,
+    :available,
     :url
   ]
   defstruct @enforce_keys
@@ -23,37 +23,37 @@ defmodule BuffEx.MyProtein.Casein do
           gram_quantity: integer(),
           price: integer(),
           price_per_hundred_gram: integer(),
-          sold_out: boolean(),
+          available: boolean(),
           url: String.t()
         }
 
   @doc """
-  Price per 83 servings and sold out cannot be obtained by a mere HTTP request. will have to be updated
-  if a real scraper is implemented.
+  Price per 83 servings cannot be reliably obtained by the scraper. Current assumption is that as long as the
+  base price is the same, the price per 83 servings is unchanged as well.
   """
   @url "https://ca.myprotein.com/sports-nutrition/slow-release-casein/11092497.html?search=casein"
   @flavour "Vanilla"
   @price_83 13_499
   @gram_quantity 2_500
   @name "Slow-Release Casein"
-  @sold_out false
 
   @spec new(map) :: t()
   def new(casein) do
     struct!(__MODULE__, casein)
   end
 
-  @spec find(String.t()) :: String.t() | {:error, String.t()}
+  @spec find(String.t()) :: {:ok, t()} | {:error, String.t()} | ErrorMessage.t()
   def find(url \\ @url) do
-    with {:ok, document} <- HTTP.send_request_and_prep_response(url),
-         {:ok, base_price} <- verify_base_price(document),
-         {:ok, name} <- verify_name(document, @name) do
+    with {:ok, %{price: price, quantities: quantities, title: name, discount: discount}} <-
+           Scraper.run_scraper(url),
+         {:ok, base_price} <- verify_base_price(price),
+         {:ok, name} <- verify_name(name, @name) do
       casein = %{
         name: name,
         flavour: @flavour,
         gram_quantity: @gram_quantity,
-        price: maybe_apply_discount(document, base_price),
-        sold_out: @sold_out,
+        price: maybe_apply_discount(discount, base_price),
+        available: available?(quantities),
         url: @url
       }
 
@@ -68,32 +68,30 @@ defmodule BuffEx.MyProtein.Casein do
     end
   end
 
-  defp verify_base_price(document) do
-    document
-    |> Floki.find(".productPrice_price")
-    |> Floki.text()
-    |> String.match?(~r/CA\$74.99/)
-    |> case do
+  defp available?(quantities) do
+    String.match?(quantities, ~r/83/)
+  end
+
+  defp verify_base_price([price | _]) do
+    case String.match?(price, ~r/CA\$74.99/) do
       true -> {:ok, @price_83}
       _ -> {:error, "Please check price"}
     end
   end
 
-  defp verify_name(document, @name) do
-    document
-    |> Floki.find("h1")
-    |> Floki.text()
-    |> String.match?(~r/Slow-Release Casein/)
-    |> case do
-      true -> {:ok, @name}
+  defp verify_name(name, @name) do
+    case List.first(name) do
+      "Slow-Release Casein" -> {:ok, @name}
       _ -> {:error, "Please check name"}
     end
   end
 
-  defp maybe_apply_discount(document, base_price) do
-    document
-    |> Floki.find("#pap-banner-text-value")
-    |> Floki.text()
+  defp maybe_apply_discount(nil, base_price) do
+    base_price
+  end
+
+  defp maybe_apply_discount(discount, base_price) do
+    discount
     |> then(&Regex.run(~r/\d{1,2}\%\sOFF/, &1))
     |> case do
       nil -> base_price

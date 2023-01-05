@@ -1,4 +1,4 @@
-defmodule BuffEx.HTTP do
+defmodule BuffEx.CanadianProtein.HTTP do
   @moduledoc """
   Sends the get request to the website and pareses the response for further
   processing
