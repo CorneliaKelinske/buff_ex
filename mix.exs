@@ -70,6 +70,7 @@ defmodule BuffEx.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:finch, "~> 0.14.0"},
       {:scraper_ex, "~> 0.2"},
+      {:sandbox_registry, "~> 0.1.0"},
 
       # tooling
       {:dialyxir, "~> 1.1", only: :test, runtime: false},
