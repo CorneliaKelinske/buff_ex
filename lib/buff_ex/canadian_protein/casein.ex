@@ -4,7 +4,7 @@ defmodule BuffEx.CanadianProtein.Casein do
   queries the page and converts successful results into structs
   """
 
-  alias BuffEx.HTTP
+  alias BuffEx.CanadianProtein.HTTP
 
   @enforce_keys [
     :name,
@@ -12,7 +12,7 @@ defmodule BuffEx.CanadianProtein.Casein do
     :gram_quantity,
     :price,
     :price_per_hundred_gram,
-    :sold_out,
+    :available,
     :url
   ]
   defstruct @enforce_keys
@@ -23,7 +23,7 @@ defmodule BuffEx.CanadianProtein.Casein do
           gram_quantity: integer(),
           price: integer(),
           price_per_hundred_gram: integer(),
-          sold_out: boolean(),
+          available: boolean(),
           url: String.t()
         }
 
@@ -36,7 +36,7 @@ defmodule BuffEx.CanadianProtein.Casein do
     struct!(__MODULE__, casein)
   end
 
-  @spec find(String.t()) :: String.t() | {:error, String.t()}
+  @spec find(String.t()) :: {:ok, t()} | {:error, String.t()}
   def find(url \\ @url) do
     with {:ok, document} <- HTTP.send_request_and_prep_response(url) do
       casein = %{
@@ -44,7 +44,7 @@ defmodule BuffEx.CanadianProtein.Casein do
         flavour: @flavour,
         gram_quantity: @gram_quantity,
         price: price(document),
-        sold_out: soldout?(document),
+        available: available?(document),
         url: @url
       }
 
@@ -65,10 +65,10 @@ defmodule BuffEx.CanadianProtein.Casein do
     |> Floki.text()
   end
 
-  defp soldout?(document) do
+  defp available?(document) do
     case Floki.find(document, ".bigsoldout") do
-      [] -> false
-      _ -> true
+      [] -> true
+      _ -> false
     end
   end
 

@@ -68,6 +68,7 @@ defmodule BuffEx.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:finch, "~> 0.14.0"},
+      {:scraper_ex, "~> 0.2"},
 
       # tooling
       {:dialyxir, "~> 1.1", only: :test, runtime: false},
