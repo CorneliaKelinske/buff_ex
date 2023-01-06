@@ -24,10 +24,11 @@ defmodule BuffEx.MixProject do
         check: :test
       ],
       dialyzer: [
+        plt_ignore_apps: [:scraper_ex],
         plt_add_apps: [:ex_unit, :mix],
         list_unused_filters: true,
-        plt_local_path: "../../.check/local_plt",
-        plt_core_path: "../../.check/core_plt"
+        plt_local_path: ".check/local_plt",
+        plt_core_path: ".check/core_plt"
       ]
     ]
   end
