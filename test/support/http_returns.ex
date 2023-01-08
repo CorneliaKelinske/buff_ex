@@ -1,4 +1,4 @@
-defmodule BuffEx.Support.BuffExReturns do
+defmodule BuffEx.Support.HTTPReturns do
   @moduledoc """
   Returns used for the HTTP Sandbox
   """

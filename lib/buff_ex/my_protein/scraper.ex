@@ -4,8 +4,23 @@ defmodule BuffEx.MyProtein.Scraper do
   on protein availability and price
   """
 
-  def run_scraper(url) do
-    ScraperEx.run_task_in_window([
+  @defaults_opts [
+    sandbox?: Mix.env() === :test
+  ]
+
+  @spec run_scraper(String.t(), keyword()) :: {:ok, map()} | {:error, ErrorMessage.t()}
+  def run_scraper(url, opts \\ @defaults_opts) do
+    opts = Keyword.merge(@defaults_opts, opts)
+
+    if opts[:sandbox?] do
+      ScraperEx.Sandbox.run_task_result(casein_flow(url))
+    else
+      ScraperEx.run_task_in_window(casein_flow(url))
+    end
+  end
+
+  def casein_flow(url) do
+    [
       {:navigate_to, url},
       {:read, :title, {:css, "h1"}},
       {:read, :price, {:css, ".productPrice_priceInfo"}},
@@ -13,6 +28,6 @@ defmodule BuffEx.MyProtein.Scraper do
       {:click, {:css, "[value=\"2416\"]"}, :timer.seconds(1)},
       {:read, :quantities, {:css, ".athenaProductVariations_radioBoxesSegment"}},
       ScraperEx.allow_error({:read, :discount, {:css, "#pap-banner-text-value"}})
-    ])
+    ]
   end
 end
