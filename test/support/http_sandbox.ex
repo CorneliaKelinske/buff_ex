@@ -11,7 +11,6 @@ defmodule BuffEx.Support.HTTPSandbox do
   @keys :unique
   # state is a sub-key to allow multiple contexts to use the same registry
   @state "http"
-  @disabled "disabled_pids"
   @sleep 10
 
   @type action :: :get | :post
@@ -103,31 +102,6 @@ defmodule BuffEx.Support.HTTPSandbox do
     end
 
     Process.sleep(@sleep)
-  end
-
-  @doc """
-  Disables the Sandbox in test for the corresponding test case only:
-
-  import HTTPSandbox, only: [disable_http_sandbox: 1]
-
-  setup :disable_http_sandbox
-  """
-  @spec disable_http_sandbox(map) :: :ok
-  def disable_http_sandbox(_context) do
-    with {:error, :registry_not_started} <-
-           SandboxRegistry.register(@registry, @disabled, %{}, @keys) do
-      raise_not_started!()
-    end
-  end
-
-  @doc "Check if sandbox for current pid was disabled by disable_http_sandbox/1"
-  @spec sandbox_disabled? :: boolean
-  def sandbox_disabled? do
-    case SandboxRegistry.lookup(@registry, @disabled) do
-      {:ok, _} -> true
-      {:error, :registry_not_started} -> raise_not_started!()
-      {:error, :pid_not_registered} -> false
-    end
   end
 
   @doc """
