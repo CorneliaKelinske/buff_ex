@@ -42,10 +42,10 @@ defmodule BuffEx.MyProtein.Casein do
     struct!(__MODULE__, casein)
   end
 
-  @spec find(String.t()) :: {:ok, t()} | {:error, String.t()} | ErrorMessage.t()
-  def find(url \\ @url) do
+  @spec find(String.t(), keyword()) :: {:ok, t()} | {:error, String.t()} | ErrorMessage.t()
+  def find(url \\ @url, opts \\ []) do
     with {:ok, %{price: price, quantities: quantities, title: name, discount: discount}} <-
-           Scraper.run_scraper(url),
+           Scraper.run_scraper(url, opts),
          {:ok, base_price} <- verify_base_price(price),
          {:ok, name} <- verify_name(name, @name) do
       casein = %{
@@ -67,6 +67,9 @@ defmodule BuffEx.MyProtein.Casein do
       {:ok, casein}
     end
   end
+
+  @spec url :: String.t()
+  def url, do: @url
 
   defp available?(quantities) do
     String.match?(quantities, ~r/83/)

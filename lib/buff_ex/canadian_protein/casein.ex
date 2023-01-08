@@ -36,7 +36,7 @@ defmodule BuffEx.CanadianProtein.Casein do
     struct!(__MODULE__, casein)
   end
 
-  @spec find(String.t(), list()) :: {:ok, t()} | {:error, String.t()}
+  @spec find(String.t(), keyword()) :: {:ok, t()} | {:error, String.t()}
   def find(url \\ @url, opts \\ []) do
     with {:ok, document} <- HTTP.send_request_and_prep_response(url, opts) do
       casein = %{

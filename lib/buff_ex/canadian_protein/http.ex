@@ -10,7 +10,7 @@ defmodule BuffEx.CanadianProtein.HTTP do
     sandbox?: Mix.env() === :test
   ]
 
-  @spec send_request_and_prep_response(String.t(), list()) ::
+  @spec send_request_and_prep_response(String.t(), keyword()) ::
           {:ok, Floki.html_tree()} | {:error, String.t()}
   def send_request_and_prep_response(url, opts \\ []) do
     with {:ok, body} <- request(url, opts) do
