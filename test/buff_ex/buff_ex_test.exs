@@ -72,7 +72,12 @@ defmodule BuffExTest do
     test "recognizes price change" do
       ScraperReturns.mock_run_scraper_flow_price_change()
 
-      assert {:error, "Please check price"} = BuffEx.my_protein_casein()
+      assert {:error,
+              %ErrorMessage{
+                code: :expectation_failed,
+                message: "Please check price",
+                details: nil
+              }} = BuffEx.my_protein_casein()
     end
   end
 end

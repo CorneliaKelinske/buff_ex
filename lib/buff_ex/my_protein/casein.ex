@@ -42,7 +42,7 @@ defmodule BuffEx.MyProtein.Casein do
     struct!(__MODULE__, casein)
   end
 
-  @spec find(keyword()) :: {:ok, t()} | {:error, String.t() | ErrorMessage.t()}
+  @spec find(keyword()) :: {:ok, t()} | {:error, ErrorMessage.t()}
   def find(opts \\ []) do
     with {:ok, %{price: price, quantities: quantities, title: name, discount: discount}} <-
            Scraper.run_scraper(@url, opts),
@@ -78,14 +78,14 @@ defmodule BuffEx.MyProtein.Casein do
   defp verify_base_price([price | _]) do
     case String.match?(price, ~r/CA\$74.99/) do
       true -> {:ok, @price_83}
-      _ -> {:error, "Please check price"}
+      _ -> {:error, ErrorMessage.expectation_failed("Please check price")}
     end
   end
 
   defp verify_name(name, @name) do
     case List.first(name) do
       "Slow-Release Casein" -> {:ok, @name}
-      _ -> {:error, "Please check name"}
+      _ -> {:error, ErrorMessage.expectation_failed("Name could not be verified")}
     end
   end
 
