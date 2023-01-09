@@ -31,7 +31,8 @@ defmodule BuffEx.CanadianProtein.HTTP do
           {:ok, body}
 
         error ->
-          {:error, inspect(error)}
+          {:error,
+           ErrorMessage.expectation_failed("Something went wrong", %{error: inspect(error)})}
       end
     end
   end
