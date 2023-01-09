@@ -8,7 +8,7 @@ defmodule BuffEx.MyProtein.ScraperTest do
 
   describe "@run_scraper/1" do
     setup do
-      ScraperReturns.mock_run_scraper_flow()
+      ScraperReturns.mock_run_scraper_flow_soldout_discount()
     end
 
     test "returns a tuple with :ok and a map" do
