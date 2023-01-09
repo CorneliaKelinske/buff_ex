@@ -16,10 +16,11 @@ defmodule BuffEx.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: BuffEx.PubSub},
       # Start the Endpoint (http/https)
-      BuffExWeb.Endpoint
+      BuffExWeb.Endpoint,
 
       # Start a worker by calling: BuffEx.Worker.start_link(arg)
       # {BuffEx.Worker, arg}
+      {Cache, [BuffEx.ProteinCache]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
