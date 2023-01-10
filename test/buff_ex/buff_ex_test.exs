@@ -1,13 +1,13 @@
 defmodule BuffExTest do
   use ExUnit.Case, async: true
 
-  alias BuffEx.{CanadianProtein, MyProtein, ProteinCache}
+  alias BuffEx.Supplements.{CanadianProtein, MyProtein, ProteinCache}
   alias BuffEx.Support.{HTTPReturns, HTTPSandbox, ScraperReturns}
   @canadian_protein_url CanadianProtein.Casein.url()
   @my_protein_url MyProtein.Casein.url()
 
   setup do
-    Cache.SandboxRegistry.register_caches(BuffEx.ProteinCache)
+    Cache.SandboxRegistry.register_caches(BuffEx.Supplements.ProteinCache)
   end
 
   describe "@find_canadian_protein_casein/1" do
@@ -15,7 +15,7 @@ defmodule BuffExTest do
       HTTPSandbox.set_get_responses([HTTPReturns.mock_canadian_protein_response_not_available()])
 
       assert {:ok,
-              %BuffEx.CanadianProtein.Casein{
+              %BuffEx.Supplements.CanadianProtein.Casein{
                 name: "Micellar Casein",
                 flavour: "Vanilla",
                 gram_quantity: 6_000,
@@ -30,7 +30,7 @@ defmodule BuffExTest do
       HTTPSandbox.set_get_responses([HTTPReturns.mock_canadian_protein_response_available()])
 
       assert {:ok,
-              %BuffEx.CanadianProtein.Casein{
+              %BuffEx.Supplements.CanadianProtein.Casein{
                 name: "Micellar Casein",
                 flavour: "Vanilla",
                 gram_quantity: 6_000,
@@ -47,7 +47,7 @@ defmodule BuffExTest do
       ScraperReturns.mock_run_scraper_flow_soldout_discount()
 
       assert {:ok,
-              %BuffEx.MyProtein.Casein{
+              %BuffEx.Supplements.MyProtein.Casein{
                 name: "Slow-Release Casein",
                 flavour: "Vanilla",
                 gram_quantity: 2_500,
@@ -62,7 +62,7 @@ defmodule BuffExTest do
       ScraperReturns.mock_run_scraper_flow_available_no_discount()
 
       assert {:ok,
-              %BuffEx.MyProtein.Casein{
+              %BuffEx.Supplements.MyProtein.Casein{
                 name: "Slow-Release Casein",
                 flavour: "Vanilla",
                 gram_quantity: 2_500,

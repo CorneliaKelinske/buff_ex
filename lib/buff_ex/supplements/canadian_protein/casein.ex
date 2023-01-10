@@ -1,10 +1,10 @@
-defmodule BuffEx.CanadianProtein.Casein do
+defmodule BuffEx.Supplements.CanadianProtein.Casein do
   @moduledoc """
   Defines the struct representing Casein protein available at Canadian Protein,
   queries the page and converts successful results into structs
   """
 
-  alias BuffEx.{CanadianProtein.HTTP, ProteinCache}
+  alias BuffEx.Supplements.{CanadianProtein.HTTP, ProteinCache}
 
   @enforce_keys [
     :name,

@@ -4,7 +4,7 @@ defmodule BuffEx do
   and for handling the results
   """
 
-  alias BuffEx.{CanadianProtein, MyProtein}
+  alias BuffEx.Supplements.{CanadianProtein, MyProtein}
 
   @spec find_canadian_protein_casein(keyword) ::
           {:ok, CanadianProtein.Casein.t()} | {:error, ErrorMessage.t()}
