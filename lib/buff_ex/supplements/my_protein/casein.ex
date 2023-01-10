@@ -1,10 +1,10 @@
-defmodule BuffEx.MyProtein.Casein do
+defmodule BuffEx.Supplements.MyProtein.Casein do
   @moduledoc """
   Defines the struct representing Casein protein available at MyProtein,
   queries the page and converts successful results into structs
   """
 
-  alias BuffEx.{MyProtein.Scraper, ProteinCache}
+  alias BuffEx.Supplements.{MyProtein.Scraper, ProteinCache}
 
   @enforce_keys [
     :name,
