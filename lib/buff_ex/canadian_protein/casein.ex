@@ -36,8 +36,8 @@ defmodule BuffEx.CanadianProtein.Casein do
     struct!(__MODULE__, casein)
   end
 
-  @spec get(keyword()) :: {:ok, t()} | {:error, ErrorMessage.t()}
-  def get(opts \\ []) do
+  @spec cache_find(keyword()) :: {:ok, t()} | {:error, ErrorMessage.t()}
+  def cache_find(opts \\ []) do
     case ProteinCache.get("canadian_protein") do
       {:ok, %__MODULE__{} = casein} -> {:ok, casein}
       _ -> find(opts)

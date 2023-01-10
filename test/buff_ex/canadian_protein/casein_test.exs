@@ -13,14 +13,14 @@ defmodule BuffEx.CanadianProtein.CaseinTest do
     end
   end
 
-  describe "@get/1" do
+  describe "@cache_find/1" do
     setup do
       Cache.SandboxRegistry.register_caches(BuffEx.ProteinCache)
     end
 
     test "returns a tuple with :ok and the Casein struct scraped from the website when the cache is empty" do
-      assert {:ok, %Casein{}} = Casein.get(sandbox?: false)
-      assert {:ok, %Casein{flavour: "Vanilla"}} = Casein.find(sandbox?: false)
+      assert {:ok, nil} = ProteinCache.get("canadian_protein")
+      assert {:ok, %Casein{flavour: "Vanilla"}} = Casein.cache_find(sandbox?: false)
     end
 
     test "returns value from cache" do
@@ -34,7 +34,7 @@ defmodule BuffEx.CanadianProtein.CaseinTest do
         url: @url
       })
 
-      assert {:ok, %Casein{flavour: "Chocolate"}} = Casein.get(sandbox?: false)
+      assert {:ok, %Casein{flavour: "Chocolate"}} = Casein.cache_find(sandbox?: false)
     end
   end
 end

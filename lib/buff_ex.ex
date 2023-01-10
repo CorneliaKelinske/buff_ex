@@ -6,11 +6,19 @@ defmodule BuffEx do
 
   alias BuffEx.{CanadianProtein, MyProtein}
 
-  @spec canadian_protein_casein(keyword) ::
+  @spec find_canadian_protein_casein(keyword) ::
           {:ok, CanadianProtein.Casein.t()} | {:error, ErrorMessage.t()}
-  defdelegate canadian_protein_casein(opts \\ []), to: CanadianProtein.Casein, as: :find
+  defdelegate find_canadian_protein_casein(opts \\ []), to: CanadianProtein.Casein, as: :find
 
-  @spec my_protein_casein(keyword()) ::
+  @spec find_my_protein_casein(keyword()) ::
           {:ok, MyProtein.Casein.t()} | {:error, ErrorMessage.t()}
-  defdelegate my_protein_casein(opts \\ []), to: MyProtein.Casein, as: :find
+  defdelegate find_my_protein_casein(opts \\ []), to: MyProtein.Casein, as: :find
+
+  @spec cache_find_canadian_casein(keyword) ::
+          {:ok, CanadianProtein.Casein.t()} | {:error, ErrorMessage.t()}
+  defdelegate cache_find_canadian_casein(opts \\ []), to: CanadianProtein.Casein, as: :cache_find
+
+  @spec cache_find_my_protein_casein(keyword) ::
+          {:ok, MyProtein.Casein.t()} | {:error, ErrorMessage.t()}
+  defdelegate cache_find_my_protein_casein(opts \\ []), to: MyProtein.Casein, as: :cache_find
 end
