@@ -4,7 +4,7 @@ defmodule BuffEx.Supplements.CanadianProtein.Casein do
   queries the page and converts successful results into structs
   """
 
-  alias BuffEx.Supplements.{CanadianProtein.HTTP, ProteinCache}
+  alias BuffEx.Supplements.{HTTP, ProteinCache}
 
   @enforce_keys [
     :name,
