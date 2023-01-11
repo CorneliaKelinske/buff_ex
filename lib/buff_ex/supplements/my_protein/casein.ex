@@ -4,7 +4,7 @@ defmodule BuffEx.Supplements.MyProtein.Casein do
   queries the page and converts successful results into structs
   """
 
-  alias BuffEx.Supplements.{MyProtein.Scraper, ProteinCache}
+  alias BuffEx.Supplements.{ProteinCache, Scraper}
 
   @enforce_keys [
     :name,
