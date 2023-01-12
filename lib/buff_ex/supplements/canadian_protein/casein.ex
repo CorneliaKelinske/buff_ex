@@ -4,7 +4,7 @@ defmodule BuffEx.Supplements.CanadianProtein.Casein do
   queries the page and converts successful results into structs
   """
 
-  alias BuffEx.Supplements.{HTTP, ProteinCache}
+  alias BuffEx.{BuffCache, HTTP}
 
   @enforce_keys [
     :name,
@@ -38,7 +38,7 @@ defmodule BuffEx.Supplements.CanadianProtein.Casein do
 
   @spec cache_find(keyword()) :: {:ok, t()} | {:error, ErrorMessage.t()}
   def cache_find(opts \\ []) do
-    case ProteinCache.get("canadian_protein") do
+    case BuffCache.get("canadian_protein") do
       {:ok, %__MODULE__{} = casein} -> {:ok, casein}
       _ -> find(opts)
     end

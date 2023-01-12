@@ -2,7 +2,8 @@ defmodule BuffEx.Support.ScraperReturns do
   @moduledoc """
   Returns used for the scraper sandbox
   """
-  alias BuffEx.Supplements.{MyProtein.Casein, Scraper}
+  alias BuffEx.Scraper
+  alias BuffEx.Supplements.MyProtein.Casein
 
   @soldout_with_discount %{
     discount: " TAKE 45% OFF | USE CODE: TAKE45",

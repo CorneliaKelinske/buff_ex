@@ -1,7 +1,8 @@
 defmodule BuffEx.Supplements.CanadianProtein.CaseinTest do
   use ExUnit.Case, async: true
 
-  alias BuffEx.Supplements.{CanadianProtein.Casein, ProteinCache}
+  alias BuffEx.BuffCache
+  alias BuffEx.Supplements.CanadianProtein.Casein
   alias BuffEx.Support.{HTTPReturns, HTTPSandbox}
 
   @url Casein.url()
@@ -45,18 +46,18 @@ defmodule BuffEx.Supplements.CanadianProtein.CaseinTest do
 
   describe "@cache_find/1" do
     setup do
-      Cache.SandboxRegistry.register_caches(BuffEx.Supplements.ProteinCache)
+      Cache.SandboxRegistry.register_caches(BuffEx.BuffCache)
     end
 
     @tag :buff_ex_external
     test "returns a tuple with :ok and the Casein struct scraped from the website when the cache is empty - live" do
-      assert {:ok, nil} = ProteinCache.get("canadian_protein")
+      assert {:ok, nil} = BuffCache.get("canadian_protein")
       assert {:ok, %Casein{flavour: "Vanilla"}} = Casein.cache_find(sandbox?: false)
     end
 
     @tag :buff_ex_external
     test "returns value from cache - live" do
-      ProteinCache.put("canadian_protein", %Casein{
+      BuffCache.put("canadian_protein", %Casein{
         name: "Micellar Casein",
         flavour: "Chocolate",
         gram_quantity: 2_500,
@@ -71,7 +72,7 @@ defmodule BuffEx.Supplements.CanadianProtein.CaseinTest do
 
     test "returns a tuple with :ok and casein struct from website when the cache is empty" do
       HTTPSandbox.set_get_responses([HTTPReturns.mock_canadian_protein_response_not_available()])
-      assert {:ok, nil} = ProteinCache.get("canadian_protein")
+      assert {:ok, nil} = BuffCache.get("canadian_protein")
 
       assert {:ok,
               %Casein{
@@ -86,7 +87,7 @@ defmodule BuffEx.Supplements.CanadianProtein.CaseinTest do
     end
 
     test "returns value from cache" do
-      ProteinCache.put("canadian_protein", %Casein{
+      BuffCache.put("canadian_protein", %Casein{
         name: "Micellar Casein",
         flavour: "Chocolate",
         gram_quantity: 6_000,

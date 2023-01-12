@@ -1,4 +1,4 @@
-defmodule BuffEx.Supplements.ProteinCache do
+defmodule BuffEx.BuffCache do
   @moduledoc """
   Caches the latest casein protein information from MyProtein and
   CanadianProtein
@@ -6,7 +6,7 @@ defmodule BuffEx.Supplements.ProteinCache do
 
   use Cache,
     adapter: Cache.ETS,
-    name: :protein_cache,
+    name: :buff_cache,
     sandbox?: Mix.env() === :test,
     opts: []
 end

@@ -1,8 +1,8 @@
-defmodule BuffEx.Supplements.HTTPTest do
+defmodule BuffEx.HTTPTest do
   use ExUnit.Case, async: true
 
+  alias BuffEx.HTTP
   alias BuffEx.Supplements.CanadianProtein.Casein
-  alias BuffEx.Supplements.HTTP
   alias BuffEx.Support.{HTTPReturns, HTTPSandbox}
 
   @url Casein.url()

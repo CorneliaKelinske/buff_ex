@@ -1,7 +1,8 @@
 defmodule BuffEx.Supplements.ScraperTest do
   use ExUnit.Case, async: true
 
-  alias BuffEx.Supplements.{MyProtein.Casein, Scraper}
+  alias BuffEx.Scraper
+  alias BuffEx.Supplements.MyProtein.Casein
 
   alias BuffEx.Support.ScraperReturns
 
