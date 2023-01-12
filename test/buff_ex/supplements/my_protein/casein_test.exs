@@ -1,6 +1,7 @@
 defmodule BuffEx.Supplements.MyProtein.CaseinTest do
   use ExUnit.Case, async: true
-  alias BuffEx.Supplements.{MyProtein.Casein, ProteinCache}
+  alias BuffEx.BuffCache
+  alias BuffEx.Supplements.MyProtein.Casein
   alias BuffEx.Support.ScraperReturns
 
   @url Casein.url()
@@ -55,18 +56,18 @@ defmodule BuffEx.Supplements.MyProtein.CaseinTest do
 
   describe "@cache_find/1" do
     setup do
-      Cache.SandboxRegistry.register_caches(BuffEx.Supplements.ProteinCache)
+      Cache.SandboxRegistry.register_caches(BuffEx.BuffCache)
     end
 
     @tag :buff_ex_external
     test "returns a tuple with :ok and the Casein struct scraped from the website when the cache is empty - live" do
-      assert {:ok, nil} = ProteinCache.get("my_protein")
+      assert {:ok, nil} = BuffCache.get("my_protein")
       assert {:ok, %Casein{flavour: "Vanilla"}} = Casein.cache_find(sandbox?: false)
     end
 
     @tag :buff_ex_external
     test "returns value from cache - live" do
-      ProteinCache.put("my_protein", %Casein{
+      BuffCache.put("my_protein", %Casein{
         name: "Slow-Release Casein",
         flavour: "Chocolate",
         gram_quantity: 2_500,
@@ -81,7 +82,7 @@ defmodule BuffEx.Supplements.MyProtein.CaseinTest do
 
     test "returns a tuple with :ok and casein struct from website when the cache is empty" do
       ScraperReturns.mock_run_scraper_flow_soldout_discount()
-      assert {:ok, nil} = ProteinCache.get("my_protein")
+      assert {:ok, nil} = BuffCache.get("my_protein")
 
       assert {:ok,
               %Casein{
@@ -96,7 +97,7 @@ defmodule BuffEx.Supplements.MyProtein.CaseinTest do
     end
 
     test "returns value from cache" do
-      ProteinCache.put("my_protein", %Casein{
+      BuffCache.put("my_protein", %Casein{
         name: "Slow-Release Casein",
         flavour: "Chocolate",
         gram_quantity: 2_500,

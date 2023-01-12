@@ -28,7 +28,7 @@ defmodule BuffEx.Supplements.Test do
 
   describe "@all_caseins/1" do
     setup do
-      Cache.SandboxRegistry.register_caches(BuffEx.Supplements.ProteinCache)
+      Cache.SandboxRegistry.register_caches(BuffEx.BuffCache)
       HTTPSandbox.set_get_responses([HTTPReturns.mock_canadian_protein_response_available()])
       ScraperReturns.mock_run_scraper_flow_available_no_discount()
     end

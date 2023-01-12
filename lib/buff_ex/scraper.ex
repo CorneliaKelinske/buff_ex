@@ -1,4 +1,4 @@
-defmodule BuffEx.Supplements.Scraper do
+defmodule BuffEx.Scraper do
   @moduledoc """
   Scrapes the MyProtein site in order to get information
   on protein availability and price

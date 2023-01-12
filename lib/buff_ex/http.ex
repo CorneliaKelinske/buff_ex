@@ -1,4 +1,4 @@
-defmodule BuffEx.Supplements.HTTP do
+defmodule BuffEx.HTTP do
   @moduledoc """
   Sends the get request to the website and pareses the response for further
   processing

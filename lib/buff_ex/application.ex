@@ -20,7 +20,7 @@ defmodule BuffEx.Application do
 
       # Start a worker by calling: BuffEx.Worker.start_link(arg)
       # {BuffEx.Worker, arg}
-      {Cache, [BuffEx.Supplements.ProteinCache]}
+      {Cache, [BuffEx.BuffCache]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
