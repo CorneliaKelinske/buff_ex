@@ -61,13 +61,13 @@ defmodule BuffEx.Supplements.MyProtein.CaseinTest do
 
     @tag :buff_ex_external
     test "returns a tuple with :ok and the Casein struct scraped from the website when the cache is empty - live" do
-      assert {:ok, nil} = BuffCache.get("my_protein")
+      assert {:ok, nil} = BuffCache.get("MyProtein.Casein")
       assert {:ok, %Casein{flavour: "Vanilla"}} = Casein.cache_find(sandbox?: false)
     end
 
     @tag :buff_ex_external
     test "returns value from cache - live" do
-      BuffCache.put("my_protein", %Casein{
+      BuffCache.put("MyProtein.Casein", %Casein{
         name: "Slow-Release Casein",
         flavour: "Chocolate",
         gram_quantity: 2_500,
@@ -82,7 +82,7 @@ defmodule BuffEx.Supplements.MyProtein.CaseinTest do
 
     test "returns a tuple with :ok and casein struct from website when the cache is empty" do
       ScraperReturns.mock_run_scraper_flow_soldout_discount()
-      assert {:ok, nil} = BuffCache.get("my_protein")
+      assert {:ok, nil} = BuffCache.get("MyProtein.Casein")
 
       assert {:ok,
               %Casein{
@@ -97,7 +97,7 @@ defmodule BuffEx.Supplements.MyProtein.CaseinTest do
     end
 
     test "returns value from cache" do
-      BuffCache.put("my_protein", %Casein{
+      BuffCache.put("MyProtein.Casein", %Casein{
         name: "Slow-Release Casein",
         flavour: "Chocolate",
         gram_quantity: 2_500,
