@@ -1,0 +1,8 @@
+<div class="w-screen flex justify-center">
+<h1 class="text-xl text-gray-900 font-bold">Vanilla Casein Protein</h1>
+<%= if @cheapest_casein do %>
+<div class="text-gray-900 text-lg">Buy it <%=link("here", to: @cheapest_casein.url) %></div>
+<% else %>
+<div class="text-gray-900 text-lg">Protein emergency! No options available. </div>
+<% end %>
+</div>

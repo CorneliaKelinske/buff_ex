@@ -3,6 +3,8 @@ defmodule BuffExWeb.PageControllerTest do
 
   test "@GET /", %{conn: conn} do
     conn = get(conn, "/")
-    assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+
+    assert html_response(conn, 302) ===
+             "<html><body>You are being <a href=\"/supplements\">redirected</a>.</body></html>"
   end
 end
