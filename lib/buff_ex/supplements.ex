@@ -20,12 +20,12 @@ defmodule BuffEx.Supplements do
   end
 
   @spec all_available_caseins(list()) :: list()
-  def all_available_caseins(caseins) when length(caseins) > 0 do
+  def all_available_caseins(caseins) do
     Enum.filter(caseins, &(&1.available === true))
   end
 
   @spec cheapest_casein(list) :: map()
-  def cheapest_casein(caseins) when length(caseins) > 0 do
+  def cheapest_casein(caseins) do
     caseins
     |> Enum.sort(&(&1.price_per_hundred_gram < &2.price_per_hundred_gram))
     |> List.first()
