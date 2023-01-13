@@ -38,7 +38,7 @@ defmodule BuffEx.Supplements.CanadianProtein.Casein do
 
   @spec cache_find(keyword()) :: {:ok, t()} | {:error, ErrorMessage.t()}
   def cache_find(opts \\ []) do
-    case BuffCache.get("canadian_protein") do
+    case BuffCache.get("CanadianProtein.Casein") do
       {:ok, %__MODULE__{} = casein} -> {:ok, casein}
       _ -> find(opts)
     end
