@@ -71,7 +71,7 @@ defmodule BuffEx.MixProject do
       {:finch, "~> 0.15.0"},
       {:scraper_ex, "~> 0.2"},
       {:sandbox_registry, "~> 0.1.0"},
-      {:elixir_cache, "~> 0.1.0"},
+      {:elixir_cache, "~> 0.2.1"},
 
       # tooling
       {:dialyxir, "~> 1.1", only: :test, runtime: false},
